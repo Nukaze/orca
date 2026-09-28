@@ -188,7 +188,7 @@ function VerboseProviderUsage({
   display: UsagePercentageDisplay
   showBar: boolean
 }): React.JSX.Element {
-  const renderBar = (w: RateLimitWindow | undefined): React.JSX.Element | null =>
+  const renderBar = (w: RateLimitWindow | null | undefined): React.JSX.Element | null =>
     showBar && w ? <MiniBar usedPct={clampUsedPercent(w.usedPercent)} display={display} /> : null
 
   if (p.buckets && p.buckets.length > 0) {
@@ -201,7 +201,7 @@ function VerboseProviderUsage({
     const fallbackWindow = p.session ?? p.monthly ?? null
     return (
       <>
-        {renderBar(visibleBuckets[0] ?? fallbackWindow ?? undefined)}
+        {renderBar(visibleBuckets[0] ?? fallbackWindow)}
         {visibleBuckets.map((bucket, index) => (
           <React.Fragment key={bucket.name}>
             {index > 0 ? <span className="text-muted-foreground">·</span> : null}
